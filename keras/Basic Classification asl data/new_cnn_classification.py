@@ -67,3 +67,6 @@ classifier.fit_generator(training_set,
                          nb_val_samples=870
                          )
 
+# output
+# after 25 epochs
+# 2718/2718 [==============================] - 133s 49ms/step - loss: 0.0285 - acc: 0.9934 - val_loss: 8.5962 - val_acc: 0.3803
