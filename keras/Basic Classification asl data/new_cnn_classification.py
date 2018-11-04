@@ -50,23 +50,56 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 
 training_set = train_datagen.flow_from_directory('data/training_set',
                                                  target_size=(64, 64),
-                                                 batch_size=32,
+                                                 batch_size=256,
                                                  class_mode='categorical'
                                                  )
 
 test_set = test_datagen.flow_from_directory('data/test_set',
                                             target_size=(64, 64),
-                                            batch_size=16,
+                                            batch_size=64,
                                             class_mode='categorical'
                                             )
 
-classifier.fit_generator(training_set,
-                         samples_per_epoch=87000,
-                         epochs=25,
+test_set_s = test_datagen.flow_from_directory('data/test_set_s',
+                                              target_size=(64, 64),
+                                              batch_size=4,
+                                              class_mode='categorical'
+                                              )
+
+test_set_l = test_datagen.flow_from_directory('data/test_set_l',
+                                              target_size=(64, 64),
+                                              batch_size=64,
+                                              class_mode='categorical'
+                                              )
+
+# classifier.fit_generator(training_set,
+#                          samples_per_epoch=87000,
+#                          epochs=2,
+#                          validation_data=test_set_s,
+#                          nb_val_samples=29
+#                          )
+#
+# classifier.fit_generator(training_set,
+#                          samples_per_epoch=87000,
+#                          epochs=2,
+#                          validation_data=test_set,
+#                          nb_val_samples=870
+#                          )
+
+# classifier.fit_generator(training_set,
+#                          samples_per_epoch=87000,
+#                          epochs=2,
+#                          validation_data=test_set_l,
+#                          nb_val_samples=13398
+#                          )
+
+classifier.fit_generator(test_set_l,
+                         samples_per_epoch=13398,
+                         epochs=2,
                          validation_data=test_set,
                          nb_val_samples=870
                          )
 
 # output
-# after 25 epochs
+# after 25 epochs 470 image test set
 # 2718/2718 [==============================] - 133s 49ms/step - loss: 0.0285 - acc: 0.9934 - val_loss: 8.5962 - val_acc: 0.3803
